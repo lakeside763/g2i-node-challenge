@@ -1,0 +1,4 @@
+{
+  "sql-file": true,
+  "configFile": "prisma/database_config.json"
+}
