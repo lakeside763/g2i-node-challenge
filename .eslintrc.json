@@ -18,7 +18,8 @@
         "import/extensions": "off",
         "import/prefer-default-export": "off",
         "no-console": ["error", { "allow": ["warn", "error"] }],
-        "consistent-return": "off"
+        "consistent-return": "off",
+        "radix": "off"
     },
     "settings": {
         "import/resolver": {

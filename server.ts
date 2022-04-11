@@ -1,5 +1,6 @@
 import compression from 'compression';
 import express from 'express';
+import Redis from 'ioredis';
 import fs from 'fs';
 import helmet from 'helmet';
 import winston from 'winston';
@@ -10,6 +11,10 @@ import { AcronymService } from './services';
 import prisma from './database';
 import acronymRoutes from './routes/acronym.routes';
 import { errorHandler } from './middlewares/error-handler';
+
+export const { port } = config;
+
+// const cache = new Redis(config.redis);
 
 const corsOptions = {
   origin: ['http://localhost:3000'],
@@ -37,8 +42,6 @@ if (process.env.NODE_ENV !== 'production') {
     }),
   );
 }
-
-export const { port } = config;
 
 const app = express();
 

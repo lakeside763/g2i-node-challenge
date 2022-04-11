@@ -1,4 +1,6 @@
-import { Express, NextFunction, Request, Response } from 'express';
+import {
+  Express, NextFunction, Request, Response,
+} from 'express';
 import { Services } from '../models/services.model';
 
 function acronymRoutes(app: Express, services: Services) {
