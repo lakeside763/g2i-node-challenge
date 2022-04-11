@@ -34,6 +34,4 @@ const seedAcronymsDataToDatabase = async () => {
   }
 };
 
-
-
 seedAcronymsDataToDatabase();

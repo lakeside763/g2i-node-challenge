@@ -6,6 +6,10 @@ import winston from 'winston';
 import cors from 'cors';
 import https from 'https';
 import config from './config';
+import { AcronymService } from './services';
+import prisma from './database';
+import acronymRoutes from './routes/acronym.routes';
+import { errorHandler } from './middlewares/error-handler';
 
 const corsOptions = {
   origin: ['http://localhost:3000'],
@@ -45,3 +49,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 app.use(helmet());
 app.use(cors(corsOptions));
+
+// Services
+const services = {
+  acronym: new AcronymService(prisma),
+};
+
+// Routes
+acronymRoutes(app, services);
+app.use(errorHandler);

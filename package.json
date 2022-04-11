@@ -8,7 +8,7 @@
   "private": true,
   "scripts": {
     "start": "npx dotenv -e env.local -- node index.js",
-    "dev": "npx dotenv -e .env.local -- nodemon index.js",
+    "dev": "nodemon -r dotenv/config --exec ts-node index.ts dotenv_config_path=.env.local",
     "seed-data": "npx dotenv -e .env.local -- ts-node-dev scripts/seed-data.ts",
     "lint": "eslint --ext .ts --ext .js . --fix",
     "migrate:up": "yarn db-migrate up",
@@ -36,8 +36,7 @@
     "dotenv-cli": "^5.1.0",
     "express": "^4.17.3",
     "helmet": "^5.0.2",
-    "ts-node": "10.4.0",
-    "typescript": "^4.6.3",
+    "ts-node": "^10.7.0",
     "winston": "^3.7.2"
   },
   "devDependencies": {
@@ -54,7 +53,8 @@
     "husky": "^7.0.4",
     "nodemon": "^2.0.15",
     "prisma": "^3.12.0",
-    "ts-node-dev": "^1.1.8"
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.6.3"
   },
   "husky": {
     "hooks": {
