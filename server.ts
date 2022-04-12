@@ -7,14 +7,14 @@ import winston from 'winston';
 import cors from 'cors';
 import https from 'https';
 import config from './config';
-import { AcronymService } from './services';
+import { AcronymService, TokenService } from './services';
 import prisma from './database';
 import acronymRoutes from './routes/acronym.routes';
 import { errorHandler } from './middlewares/error-handler';
 
 export const { port } = config;
 
-// const cache = new Redis(config.redis);
+const cache = new Redis(config.redis);
 
 const corsOptions = {
   origin: ['http://localhost:3000'],
@@ -56,6 +56,7 @@ app.use(cors(corsOptions));
 // Services
 const services = {
   acronym: new AcronymService(prisma),
+  token: new TokenService(config.jwt, cache),
 };
 
 // Routes

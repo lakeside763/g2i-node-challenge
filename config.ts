@@ -7,7 +7,15 @@ const redis = {
   host: redisHost,
 };
 
+const jwt = {
+  secret: process.env.JWT_SECRET,
+  audience: process.env.JWT_AUD,
+  issuer: process.env.JWT_ISS,
+  expiresIn: process.env.JWT_EXP,
+};
+
 export default {
   port,
   redis,
+  jwt,
 };

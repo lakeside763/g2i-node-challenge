@@ -14,8 +14,6 @@ class AcronymService extends AppService {
       where = { ...where, OR };
     }
 
-    console.log(where);
-
     const skip = (from - 1) * limit;
     const take = limit;
     const query = { where };
