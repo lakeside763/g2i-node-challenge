@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { hash } from 'bcryptjs';
 import prisma from '../database';
 import { logger } from '../server';
 
@@ -34,4 +35,24 @@ const seedAcronymsDataToDatabase = async () => {
   }
 };
 
+const seedAdminUserToDatabase = async () => {
+  const admin = {
+    email: 'admin@g2i.com',
+    password: 'password',
+  };
+
+  const password = await hash(admin.password, 10);
+  const createUser = await prisma.user.create({
+    data: {
+      email: admin.email,
+      password,
+    },
+  });
+  if (!createUser) {
+    logger.error('Create admin user failed');
+  }
+  logger.info('Admin user added successfully');
+};
+
 seedAcronymsDataToDatabase();
+seedAdminUserToDatabase();

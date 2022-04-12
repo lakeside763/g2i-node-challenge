@@ -1,7 +1,6 @@
-import {
-  Express, NextFunction, Request, Response,
-} from 'express';
+import { Express, NextFunction, Request, Response } from 'express';
 import { Services } from '../models/services.model';
+import { requireAuth } from '../middlewares/require-auth';
 
 function acronymRoutes(app: Express, services: Services) {
   app.get('/acronym/get-acronyms', async (req: Request, res: Response, next: NextFunction) => {
@@ -32,13 +31,16 @@ function acronymRoutes(app: Express, services: Services) {
     }
   });
 
-  app.delete('/acronym/delete-acronym/:id', async (req: Request, res: Response, next: NextFunction) => {
+  app.delete('/acronym/delete-acronym/:id', requireAuth, async (req: Request, res: Response, next: NextFunction) => {
     try {
       const { id } = req.params;
       const { message } = await services.acronym.deleteAcronym({ id });
       return res.status(200).json(message);
-    } catch (error) {
-      return next(error);
+    } catch (error: any) {
+      if (error.code === 'P2025') {
+        return res.status(400).json({ errors: [{ message: error.meta.cause }] });
+      }
+      next();
     }
   });
 }

@@ -1,6 +1,7 @@
-import { AcronymService, TokenService } from '../services';
+import { AcronymService, AuthService, TokenService } from '../services';
 
 export interface Services {
   acronym: AcronymService,
   token: TokenService,
+  auth: AuthService,
 }

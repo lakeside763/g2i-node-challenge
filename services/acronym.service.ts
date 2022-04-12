@@ -33,9 +33,7 @@ class AcronymService extends AppService {
   }
 
   async createAcronym({ ...rest }: any) {
-    const acronym = await this.prisma.acronym.create({
-      data: { ...rest },
-    });
+    const acronym = await this.prisma.acronym.create({ data: { ...rest } });
 
     if (!acronym) {
       throw new BadRequestError('Acronym creation failed');
@@ -45,10 +43,8 @@ class AcronymService extends AppService {
   }
 
   async updateAcronym({ id, ...rest }: any) {
-    const acronym = await this.prisma.acronym.update({
-      where: { id },
-      data: { ...rest },
-    });
+    const acronym = await this.prisma.acronym.update({ where: { id },
+      data: { ...rest } });
 
     if (!acronym) {
       throw new BadRequestError('Acronym update failed, invalid ID was provided');

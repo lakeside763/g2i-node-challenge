@@ -64,6 +64,29 @@ class TokenService {
     }
     return parts[1];
   }
+
+  async getAuth({ req, next }: any) {
+    try {
+      const jwtToken = await this.getFromHeaders({ req });
+      const token = await this.verify({ token: jwtToken });
+      return this.get({ token });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async get({ token }: JwtPayload) {
+    const auth = await this.cache.get(this.cacheKey(token.jti));
+    if (!auth) {
+      return null;
+    }
+    return JSON.parse(auth);
+  }
+
+  async delete({ token }: JwtPayload) {
+    await this.cache.del(this.cacheKey(token.jti));
+    return true;
+  }
 }
 
 export default TokenService;
