@@ -1,0 +1,47 @@
+version: '3.7'
+
+services:
+  api:
+    container_name: acronym_rest_api
+    image: lakeside763/acronym-rest-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        buildversion: 1
+        PACKAGES: 'nano wget curl'
+    depends_on:
+      - redis
+      - postgres
+    ports:
+      - 6000:6000
+      - 9229:9229
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: yarn start
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://postgres:password@postgres/g2i
+      PORT: 6000
+      REDIS_PORT: 6379
+      REDIS_HOST: redis
+
+
+  postgres:
+    container_name: postgres
+    image: postgres:12.8-alpine
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: g2i
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - 6379:6379
+    command: redis-server --save 60 1 --loglevel warning
