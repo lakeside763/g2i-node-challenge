@@ -1,4 +1,4 @@
-FROM node:14.19.1-alpine
+FROM node:12.22-alpine
 LABEL author="Moses Idowu"
 
 ARG PACKAGES=nano
@@ -6,8 +6,8 @@ ARG PACKAGES=nano
 RUN apk update && apk add $PACKAGES
 
 WORKDIR /app
-COPY ./package.json ./
-COPY yarn.lock ./
+COPY package.json /app/
+COPY yarn.lock ./app/
 RUN yarn install
 
 COPY prisma/schema.prisma ./prisma/
@@ -15,7 +15,7 @@ COPY prisma/database_config.json ./prisma/
 
 RUN npx prisma generate
 
-COPY . .
+COPY . /app/
 
 EXPOSE 6000
 

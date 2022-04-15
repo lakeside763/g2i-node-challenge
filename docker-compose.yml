@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  api:
+  web:
     container_name: acronym_rest_api
     image: lakeside763/acronym-rest-api
     build:
@@ -21,7 +21,7 @@ services:
       - /app/node_modules
     command: yarn start
     environment:
-      NODE_ENV: production
+      NODE_ENV: local
       DATABASE_URL: postgres://postgres:password@postgres/g2i
       PORT: 6000
       REDIS_PORT: 6379
@@ -44,4 +44,7 @@ services:
     restart: always
     ports:
       - 6379:6379
-    command: redis-server --save 60 1 --loglevel warning
+    command: redis-server
+    environment:
+      REDIS_PORT: 6379
+      REDIS_HOST: redis
