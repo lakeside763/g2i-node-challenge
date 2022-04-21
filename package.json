@@ -8,7 +8,7 @@
   "private": true,
   "keywords": [],
   "scripts": {
-    "start": "npx ts-node index.ts",
+    "start": "npx dotenv -e .env.local ts-node index.ts",
     "build": "tsc -p .",
     "dev": "nodemon -r dotenv/config --exec ts-node index.ts dotenv_config_path=.env.local",
     "seed-data": "npx dotenv -e .env.local -- ts-node-dev scripts/seed-data.ts",
