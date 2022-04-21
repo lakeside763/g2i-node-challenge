@@ -8,7 +8,7 @@ import cors from 'cors';
 import https from 'https';
 import config from './config';
 import { AcronymService, AuthService, TokenService } from './services';
-import prisma from './database';
+import prisma from './database_connection';
 import acronymRoutes from './routes/acronym.routes';
 import authRoutes from './routes/auth.routes';
 import { errorHandler } from './middlewares/error-handler';
@@ -36,7 +36,7 @@ if (process.env.NODE_ENV !== 'production') {
   );
 }
 
-const app = express();
+export const app = express();
 
 export const server = https.createServer(httpsOptions, app);
 
