@@ -16,6 +16,7 @@
     "no-console": ["error", { "allow": ["warn", "error"] }],
     "consistent-return": "off",
     "radix": "off",
+    "no-undef": "off",
     "class-methods-use-this": "off",
     "object-curly-newline": ["error", {
         "ImportDeclaration": { "multiline": true, "minProperties": 5 },
