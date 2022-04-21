@@ -1,5 +1,11 @@
 # G2i Node Challenge
 
+# Challenge link
+
+```
+https://github.com/lakeside763/g2i-node-challenge
+```
+
 Take home test for Node.js developers.
 
 ### Steps taken for the challenge solution
