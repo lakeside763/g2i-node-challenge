@@ -17,11 +17,9 @@ export const { port } = config;
 
 const cache = new Redis(config.redis);
 
-const corsOptions = { origin: ['http://localhost:3000'],
-  optionSuccessStatus: 200 };
+const corsOptions = { origin: ['http://localhost:3000'], optionSuccessStatus: 200 };
 
-const httpsOptions = { key: fs.readFileSync('./certs/test-key.key'),
-  cert: fs.readFileSync('./certs/test-cert.pem') };
+const httpsOptions = { key: fs.readFileSync('./certs/test-key.key'), cert: fs.readFileSync('./certs/test-cert.pem') };
 
 export const logger = winston.createLogger({
   level: 'info',
@@ -31,9 +29,7 @@ export const logger = winston.createLogger({
 });
 
 if (process.env.NODE_ENV !== 'production') {
-  logger.add(
-    new winston.transports.Console({ format: winston.format.simple() }),
-  );
+  logger.add(new winston.transports.Console({ format: winston.format.simple() }));
 }
 
 export const app = express();
@@ -47,9 +43,11 @@ app.use(helmet());
 app.use(cors(corsOptions));
 
 // Services
-export const services = { acronym: new AcronymService(prisma),
+export const services = {
+  acronym: new AcronymService(prisma),
   token: new TokenService(config.jwt, cache),
-  auth: new AuthService(prisma) };
+  auth: new AuthService(prisma),
+};
 
 // Routes
 acronymRoutes(app, services);
