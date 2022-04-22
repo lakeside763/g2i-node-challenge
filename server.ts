@@ -5,7 +5,7 @@ import fs from 'fs';
 import helmet from 'helmet';
 import winston from 'winston';
 import cors from 'cors';
-import https from 'https';
+import https, { Server } from 'https';
 import config from './config';
 import { AcronymService, AuthService, TokenService } from './services';
 import prisma from './database_connection';
@@ -59,3 +59,11 @@ app.use(errorHandler);
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.end({ message: 'Error' });
 });
+
+// eslint-disable-next-line no-shadow
+export const shutdown = async (server: Server) => {
+  logger.info('Received kill signal, shutting down gracefully'); // eslint-disable-line no-console
+  await prisma.$disconnect();
+  server.close();
+  return process.exit();
+};
